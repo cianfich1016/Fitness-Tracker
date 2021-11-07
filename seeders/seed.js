@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 const db = require('../models');
 
-mongoose.connect('mongodb://localhost/workout', {
+mongoose.connect('mongodb://localhost/workout-tracker', {
   useNewUrlParser: true,
-  useFindAndModify: false,
+  
   useUnifiedTopology: true,
 });
 
@@ -128,7 +128,7 @@ const workoutSeed = [
 db.Workout.deleteMany({})
   .then(() => db.Workout.collection.insertMany(workoutSeed))
   .then((data) => {
-    console.log(data.result.n + ' records inserted!');
+    console.log("Seed data inserted!");
     process.exit(0);
   })
   .catch((err) => {
