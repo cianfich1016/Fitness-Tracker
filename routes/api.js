@@ -3,7 +3,14 @@ const Workout = require("../models/workout.js");
 
 //Get last workout
 router.get("/api/workouts", (req, res) => {
-    Workout.find({}) 
+    Workout.aggregate([
+        {
+            $addFields: {
+                totalDuration: { $sum: "$exercise.duration"},
+                //totalWeight: { $sum: "$exercise.weight"}
+            }
+        }
+    ])
     .then(dbWorkout => {
         res.json(dbWorkout);
       })
@@ -14,7 +21,14 @@ router.get("/api/workouts", (req, res) => {
 
 //Get workouts in range
 router.get("/api/workouts/range", (req, res) => {
-    Workout.find({})
+    Workout.aggregate([
+        {
+            $addFields: {
+                totalDuration: { $sum: "$exercise.duration"},
+                //totalWeight: { $sum: "$exercise.weight"}
+            }
+        }
+    ])
     .limit(7)
     .then(dbWorkout => {
         res.json(dbWorkout);
@@ -29,20 +43,21 @@ router.post("/api/workouts", ({body}, res) => {
     Workout.create(body)
     .then(dbWorkout => {
         res.json(dbWorkout);
-        console.log("Workout was created.")
+        console.log("yay")
       })
       .catch(err => {
         res.status(400).json(err);
       });
   });
 
-router.put("/api/workouts/:id", ({body, params}, res) => {
-    Workout.findOneAndUpdate(params.id , 
-        { $push: { exercise: body } }, 
+router.put("/api/workouts/:id", (req, res) => {
+    Workout.findOneAndUpdate({_id: req.params.id} , 
+        { $push: { exercise: req.body } }, 
         { new: true }
     )
     .then(dbWorkout => {
         res.json(dbWorkout);
+        console.log("Yay!!")
     })
     .catch(err => {
         res.json(err);
