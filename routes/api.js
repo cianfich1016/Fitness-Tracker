@@ -25,15 +25,28 @@ router.get("/api/workouts/range", (req, res) => {
 });
 
 //Create new workout and add to database
-router.post("/api/workouts", (req, res) => {
+router.post("/api/workouts", ({body}, res) => {
     Workout.create(body)
     .then(dbWorkout => {
         res.json(dbWorkout);
+        console.log("Workout was created.")
       })
       .catch(err => {
         res.status(400).json(err);
       });
   });
 
+router.put("/api/workouts/:id", ({body, params}, res) => {
+    Workout.findOneAndUpdate(params.id , 
+        { $push: { exercise: body } }, 
+        { new: true }
+    )
+    .then(dbWorkout => {
+        res.json(dbWorkout);
+    })
+    .catch(err => {
+        res.json(err);
+    });
+});
 
 module.exports = router;
