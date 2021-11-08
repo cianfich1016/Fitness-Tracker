@@ -10,9 +10,21 @@ router.get("/api/workouts", (req, res) => {
       .catch(err => {
         res.status(400).json(err);
       });
-})
+});
 
-//Create new workout and add 
+//Get workouts in range
+router.get("/api/workouts/range", (req, res) => {
+    db.Workout.find({})
+    .limit(7)
+    .then(dbWorkout => {
+        res.json(dbWorkout);
+      })
+      .catch(err => {
+        res.status(400).json(err);
+      });
+});
+
+//Create new workout and add to database
 router.post("/api/workouts", (req, res) => {
     db.Workout.create(body)
     .then(dbWorkout => {
@@ -22,3 +34,5 @@ router.post("/api/workouts", (req, res) => {
         res.status(400).json(err);
       });
   });
+
+
