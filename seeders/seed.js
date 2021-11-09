@@ -3,7 +3,6 @@ const db = require('../models');
 
 mongoose.connect('mongodb://localhost/workout-tracker', {
   useNewUrlParser: true,
-  //useFindAndModify: false,
   useUnifiedTopology: true,
 });
 

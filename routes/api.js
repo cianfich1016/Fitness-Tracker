@@ -6,36 +6,31 @@ router.get("/api/workouts", (req, res) => {
     Workout.aggregate([
         {
             $addFields: {
-                totalDuration: { $sum: "$exercise.duration"},
+                totalDuration: { $sum: "$exercises.duration"},
                 //totalWeight: { $sum: "$exercise.weight"}
             }
         }
     ])
     .then(dbWorkout => {
-        res.json(dbWorkout);
+        res.json(dbWorkout);nod
       })
       .catch(err => {
         res.status(400).json(err);
       });
 });
 
-//Get workouts in range
-router.get("/api/workouts/range", (req, res) => {
-    Workout.aggregate([
-        {
-            $addFields: {
-                totalDuration: { $sum: "$exercise.duration"},
-                //totalWeight: { $sum: "$exercise.weight"}
-            }
-        }
-    ])
-    .limit(7)
+router.put("/api/workouts/:id", (req, res) => {
+    Workout.findOneAndUpdate({_id: req.params.id} , 
+        { $push: { exercises: req.body } }, 
+        { new: true }
+    )
     .then(dbWorkout => {
         res.json(dbWorkout);
-      })
-      .catch(err => {
-        res.status(400).json(err);
-      });
+        console.log("Yay!!")
+    })
+    .catch(err => {
+        res.json(err);
+    });
 });
 
 //Create new workout and add to database
@@ -50,18 +45,27 @@ router.post("/api/workouts", ({body}, res) => {
       });
   });
 
-router.put("/api/workouts/:id", (req, res) => {
-    Workout.findOneAndUpdate({_id: req.params.id} , 
-        { $push: { exercise: req.body } }, 
-        { new: true }
-    )
+//Get workouts in range
+router.get("/api/workouts/range", (req, res) => {
+    Workout.aggregate([
+        {
+            $addFields: {
+                totalDuration: { $sum: "$exercises.duration"},
+                //totalWeight: { $sum: "$exercise.weight"}
+            }
+        }
+    ])
+    .limit(7)
     .then(dbWorkout => {
         res.json(dbWorkout);
-        console.log("Yay!!")
-    })
-    .catch(err => {
-        res.json(err);
-    });
+      })
+      .catch(err => {
+        res.status(400).json(err);
+      });
 });
+
+
+
+
 
 module.exports = router;
