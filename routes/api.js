@@ -54,7 +54,7 @@ router.get("/api/workouts/range", (req, res) => {
             }
         }
     ])
-    //.limit(7)
+    .limit(7)
     .then(dbWorkout => {
         res.json(dbWorkout);
       })
