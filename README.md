@@ -18,11 +18,12 @@
   ## Usage
   Whether the tracker is run locally ("node server.js" in command line) or live, add a new workout by selecting the "New Workout" button. Choose which type of exercise and fill in the appropriate boxes. Add this exercise to the workout and continue doing so until the workout itself is finished. Click "Complete Workout" to finish or pick right back up where you left off. Click "Dashboard" in the navigation bar to view 2 graphs of stats, total duration and weight over 7 days.
 
-  Click [here](https://fitness-tracker-1016.herokuapp.com/?id=618aee59ead2675090acacc8) to view live deployed application!
+  Click [here](https://fitness-tracker-1016.herokuapp.com/?id=618aee59ead2675090acacc8) to view live deployed application.
 
   ![Homepage](./public/images/Home.png)
   ![Choose exercise type](./public/images/Choose.png)
   ![Complete information for exercise](./public/images/Complete.png)
+  ![Example of stats page showing daily workouts.](./public/images/Stats.png)
 
   
   ## Credits
